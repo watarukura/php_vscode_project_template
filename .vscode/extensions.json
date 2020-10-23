@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "bmewburn.vscode-intelephense-client",
+        "felixfbecker.php-debug",
+        "junstyle.php-cs-fixer",
+        "rifi2k.format-html-in-php",
+        "mehedidracula.php-namespace-resolver",
+        "marabesi.php-import-checker",
+        "neilbrayfield.php-docblocker"
+    ]
+}
