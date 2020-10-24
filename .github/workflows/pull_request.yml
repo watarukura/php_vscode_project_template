@@ -42,6 +42,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Lint Code Base
         uses: github/super-linter@v3
@@ -58,6 +60,8 @@ jobs:
           VALIDATE_TYPESCRIPT_STANDARD: false
           VALIDATE_DOCKER: true
           ACTIONS_RUNNER_DEBUG: false
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify Result to Slack
         uses: homoluctus/slatify@master
