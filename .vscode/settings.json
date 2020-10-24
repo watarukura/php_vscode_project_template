@@ -31,5 +31,10 @@
     "html.format.preserveNewLines": true,
     "html.format.wrapLineLength": 120,
     "html.format.wrapAttributes": "auto",
-    "files.autoSave": "onFocusChange"
+    "files.autoSave": "onFocusChange",
+    "[markdown]": {
+        "editor.tabSize": 2,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": false
+    }
 }
