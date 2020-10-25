@@ -51,15 +51,9 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_YAML: true
           VALIDATE_JSON: true
-          VALIDATE_XML: false
           VALIDATE_MD: true
           VALIDATE_BASH: true
-          VALIDATE_JAVASCRIPT_ES: false
-          VALIDATE_JAVASCRIPT_STANDARD: false
-          VALIDATE_TYPESCRIPT_ES: false
-          VALIDATE_TYPESCRIPT_STANDARD: false
           VALIDATE_DOCKER: true
-          ACTIONS_RUNNER_DEBUG: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
