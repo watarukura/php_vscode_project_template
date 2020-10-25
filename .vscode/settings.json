@@ -4,13 +4,14 @@
         "editor.insertSpaces": true,
         "editor.formatOnSave": true,
         "files.trimTrailingWhitespace": true,
-        "editor.rulers": [80]
+        "editor.rulers": [80],
+        "editor.defaultFormatter": "junstyle.php-cs-fixer"
     },
     "php.suggest.basic": false,
     "files.associations": {
         "*.module": "php"
     },
-    "php-cs-fixer.executablePath": "php-cs-fixer",
+    "php-cs-fixer.executablePath": "${workspaceFolder}/vendor/bin/php-cs-fixer",
     "php-cs-fixer.executablePathWindows": "",
     "php-cs-fixer.onsave": true,
     "php-cs-fixer.rules": "@PSR2",
@@ -31,5 +32,10 @@
     "html.format.preserveNewLines": true,
     "html.format.wrapLineLength": 120,
     "html.format.wrapAttributes": "auto",
-    "files.autoSave": "onFocusChange"
+    "files.autoSave": "onFocusChange",
+    "[markdown]": {
+        "editor.tabSize": 2,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": false
+    }
 }
