@@ -22,6 +22,7 @@
     },
     "scripts": {
         "cs": "php-cs-fixer fix --allow-risky=yes public/",
+        "cs_test": "php-cs-fixer fix --allow-risky=yes tests/",
         "lint": "@cs --dry-run",
         "test": [
             "phpunit tests/",
@@ -41,5 +42,9 @@
         "psr-4": {
             "App\\Test\\": "tests/"
         }
+    },
+    "config": {
+        "process-timeout": 0,
+        "sort-packages": true
     }
 }
