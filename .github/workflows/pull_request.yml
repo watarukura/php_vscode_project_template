@@ -84,6 +84,8 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Test with phpunit
+        env:
+          APP_ENV: ci
         run: |
           composer test
 
