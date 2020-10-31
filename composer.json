@@ -25,8 +25,11 @@
         "cs_test": "php-cs-fixer fix --allow-risky=yes tests/",
         "lint": "@cs --dry-run",
         "test": [
-            "phpunit tests/",
+            "phpunit --configuration phpunit.xml",
             "@lint"
+        ],
+        "test:coverage": [
+            "phpunit --configuration phpunit.xml --coverage-clover build/logs/clover.xml --coverage-html build/coverage"
         ],
         "analyse": [
             "phpstan analyze --level=max public",
