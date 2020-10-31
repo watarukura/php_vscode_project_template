@@ -85,6 +85,7 @@ jobs:
 
       - name: Test with phpunit
         run: |
+          ln -s config/settings.dev.php config/settings.php
           composer test
 
       - name: Notify Result to Slack
