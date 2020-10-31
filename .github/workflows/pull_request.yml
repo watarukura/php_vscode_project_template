@@ -84,8 +84,9 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Test with phpunit
+        env:
+          APP_ENV: ci
         run: |
-          ln -s config/settings.dev.php config/settings.php
           composer test
 
       - name: Notify Result to Slack

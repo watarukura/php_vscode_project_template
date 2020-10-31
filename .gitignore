@@ -2,5 +2,5 @@ vendor/
 build/
 .idea/
 .php_cs.cache
-config/settings.php
 .phpunit.result.cache
+.env
