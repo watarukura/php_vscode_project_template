@@ -17,10 +17,12 @@
     },
     "require": {
         "slim/slim": "^4.5",
-        "slim/psr7": "^1.2"
+        "slim/psr7": "^1.2",
+        "php-di/php-di": "^6.3"
     },
     "scripts": {
         "cs": "php-cs-fixer fix --allow-risky=yes public/",
+        "cs_test": "php-cs-fixer fix --allow-risky=yes tests/",
         "lint": "@cs --dry-run",
         "test": [
             "phpunit tests/",
@@ -30,5 +32,19 @@
             "phpstan analyze --level=max public",
             "psalm"
         ]
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Test\\": "tests/"
+        }
+    },
+    "config": {
+        "process-timeout": 0,
+        "sort-packages": true
     }
 }

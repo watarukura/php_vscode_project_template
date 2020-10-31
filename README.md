@@ -1,4 +1,4 @@
-# php_vscode_procject_template
+# php_vscode_project_template
 
 ## 概要
 
