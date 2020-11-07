@@ -40,6 +40,10 @@ return [
         $flags = $settings['flags'];
         $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 
+        // echo $dsn;
+        // echo $username;
+        // echo $password;
+        // echo $flags;
         return new PDO($dsn, $username, $password, $flags);
     },
 ];
