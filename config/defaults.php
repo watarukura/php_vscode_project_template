@@ -30,9 +30,10 @@ $settings['error'] = [
 // Database settings
 $settings['db'] = [
     'driver' => \Cake\Database\Driver\Mysql::class,
-    'host' => 'localhost',
+    'host' => 'db:3306',
     'encoding' => 'utf8mb4',
-    'collation' => 'utf8mb4_unicode_ci',
+    'charset' => 'utf8mb4',
+    'collation' => 'utf8mb4_bin',
     // Enable identifier quoting
     'quoteIdentifiers' => true,
     // Set to null to use MySQL servers timezone

@@ -1,0 +1,60 @@
+version: "3.7"
+services:
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/dockerfile/Dockerfile
+    image: watarukura/php_vscode_template-nginx:dev
+    container_name: php_vscode_template-nginx
+    read_only: true
+    ports:
+      - '127.0.0.1:28081:8080'
+    volumes:
+      - './public:/var/www/html/public:ro'
+      - './docker/nginx/cache:/var/cache/nginx'
+      - './docker/nginx/run:/tmp'
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: ./docker/php-fpm/dockerfile/Dockerfile
+    image: watarukura/php_vscode_template-php:dev
+    container_name: php_vscode_template-php
+    environment:
+      - DOCKER=1
+      - XDEBUG_CONFIG=remote_host=host.docker.internal
+      - AWS_ACCESS_KEY_ID=DUMMY
+      - AWS_SECRET_KEY_ID=DUMMY
+      - AWS_DEFAULT_REGION=ap-northeast-1
+      - AWS_DEFAULT_OUTPUT=json
+      - APP_ENV=dev
+    ports:
+      - '127.0.0.1:29000:9000'
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+      - dynamodb
+
+  db:
+    image: library/mysql:5.6
+    ports:
+      - "23307:3306"
+    environment:
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+      - MYSQL_ROOT_PASSWORD=root_pass
+      - TZ=Asia/Tokyo
+    volumes:
+      - "./docker/mysql/config/my.cfg:/etc/mysql/conf.d/config-file.cnf"
+      - "./resources/migrations/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql"
+
+  dynamodb:
+    image: amazon/dynamodb-local:latest
+    restart: always
+    ports:
+      - "127.0.0.1:28000:8000"
