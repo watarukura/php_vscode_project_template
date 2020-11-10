@@ -4,6 +4,7 @@ namespace App\Domain\User\Service;
 
 use App\Domain\User\Repository\UserCreatorRepository;
 use App\Exception\ValidationException;
+use App\Factory\LoggerFactory;
 
 /**
  * Service.
@@ -15,14 +16,23 @@ final class UserCreator
      */
     private $repository;
 
+
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
     /**
      * The constructor.
      *
      * @param UserCreatorRepository $repository The repository
      */
-    public function __construct(UserCreatorRepository $repository)
+    public function __construct(UserCreatorRepository $repository, LoggerFactory $logger)
     {
         $this->repository = $repository;
+        $this->logger = $logger
+            ->addConsoleHandler()
+            ->createInstance('user_creator');
     }
 
     /**
@@ -41,7 +51,7 @@ final class UserCreator
         $userId = $this->repository->insertUser($data);
 
         // Logging here: User created successfully
-        //$this->logger->info(sprintf('User created successfully: %s', $userId));
+        $this->logger->info(sprintf('User created successfully: %s', $userId));
 
         return $userId;
     }

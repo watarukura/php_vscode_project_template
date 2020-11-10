@@ -16,13 +16,18 @@
         "vimeo/psalm": "^4.0"
     },
     "require": {
-        "slim/slim": "^4.5",
+        "monolog/monolog": "^2.1",
+        "php-di/php-di": "^6.3",
         "slim/psr7": "^1.2",
-        "php-di/php-di": "^6.3"
+        "slim/slim": "^4.5"
     },
     "scripts": {
-        "cs": "php-cs-fixer fix --allow-risky=yes public/",
-        "cs_test": "php-cs-fixer fix --allow-risky=yes tests/",
+        "cs": [
+            "php-cs-fixer fix --allow-risky=yes public/",
+            "php-cs-fixer fix --allow-risky=yes src/",
+            "php-cs-fixer fix --allow-risky=yes config/",
+            "php-cs-fixer fix --allow-risky=yes tests/"
+        ],
         "lint": "@cs --dry-run",
         "test": [
             "phpunit --configuration phpunit.xml",
