@@ -27,6 +27,15 @@ $settings['error'] = [
     'log_error_details' => true,
 ];
 
+// Logger settings
+$settings['logger'] = [
+    'name' => 'app',
+    'path' => __DIR__ . '/../logs',
+    'filename' => 'app.log',
+    'level' => \Monolog\Logger::DEBUG,
+    'file_permission' => 0775,
+];
+
 // Database settings
 $settings['db'] = [
     'driver' => \Cake\Database\Driver\Mysql::class,
