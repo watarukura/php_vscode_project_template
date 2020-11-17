@@ -1,10 +1,10 @@
 <?php
 
-use App\Factory\LoggerFactory;
 use Psr\Container\ContainerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Middleware\ErrorMiddleware;
+use App\Factory\LoggerFactory;
 
 return [
     'settings' => function () {
