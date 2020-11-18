@@ -38,7 +38,7 @@ $settings['logger'] = [
 
 // Database settings
 $settings['db'] = [
-    'driver' => \Cake\Database\Driver\Mysql::class,
+    'driver' => 'mysql',
     'host' => 'db:3306',
     'encoding' => 'utf8mb4',
     'charset' => 'utf8mb4',
