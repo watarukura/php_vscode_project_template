@@ -4,6 +4,7 @@ use Psr\Container\ContainerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
 use Slim\Middleware\ErrorMiddleware;
+use App\Factory\LoggerFactory;
 
 return [
     'settings' => function () {
@@ -27,6 +28,10 @@ return [
             (bool)$settings['log_errors'],
             (bool)$settings['log_error_details']
         );
+    },
+
+    LoggerFactory::class => function (ContainerInterface $container) {
+        return new LoggerFactory($container->get('settings')['logger']);
     },
 
     PDO::class => function (ContainerInterface $container) {

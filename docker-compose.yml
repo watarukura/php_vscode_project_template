@@ -35,6 +35,8 @@ services:
       - '127.0.0.1:29000:9000'
     volumes:
       - .:/var/www/html
+      - './docker/php-fpm/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini'
+      - './docker/php-fpm/tmp:/tmp'
     depends_on:
       - db
       - dynamodb
