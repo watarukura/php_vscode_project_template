@@ -5,6 +5,7 @@ namespace App\Domain\User\Service;
 use App\Domain\User\Repository\UserCreatorRepository;
 use App\Exception\ValidationException;
 use App\Factory\LoggerFactory;
+use Psr\Log\LoggerInterface;
 
 /**
  * Service.
@@ -38,7 +39,7 @@ final class UserCreator
     /**
      * Create a new user.
      *
-     * @param array $data The form data
+     * @param array<string,string> $data The form data
      *
      * @return int The new user ID
      */
@@ -59,7 +60,7 @@ final class UserCreator
     /**
      * Input validation.
      *
-     * @param array $data The form data
+     * @param array<string,string> $data The form data
      *
      * @throws ValidationException
      *

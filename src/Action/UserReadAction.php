@@ -31,7 +31,7 @@ final class UserReadAction
      *
      * @param ServerRequestInterface $request The request
      * @param ResponseInterface $response The response
-     * @param array $args The route arguments
+     * @param array<string,string> $args The route arguments
      *
      * @return ResponseInterface The response
      */

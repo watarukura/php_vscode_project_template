@@ -8,6 +8,9 @@ use Psr\Http\Message\ServerRequestInterface;
 
 final class UserCreateAction
 {
+    /**
+     * @var UserCreator
+     */
     private $userCreator;
 
     public function __construct(UserCreator $userCreator)

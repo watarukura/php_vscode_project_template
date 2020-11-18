@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\Handler;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -26,7 +27,7 @@ final class LoggerFactory
     /**
      * The constructor.
      *
-     * @param array $settings The settings
+     * @param array<string,string> $settings The settings
      */
     public function __construct(array $settings)
     {
@@ -35,7 +36,7 @@ final class LoggerFactory
     }
 
     /**
-     * @var array Handler
+     * @var Handler[]
      */
     private $handler = [];
 
@@ -62,8 +63,8 @@ final class LoggerFactory
     /**
      * Add rotating file logger handler.
      *
-     * @param string $filename The filename
-     * @param int $level The level (optional)
+     * @param string   $filename The filename
+     * @param int|null $level    The level (optional)
      *
      * @return LoggerFactory The logger factory
      */
@@ -92,7 +93,7 @@ final class LoggerFactory
     /**
      * Add a console logger.
      *
-     * @param int $level The level (optional)
+     * @param int|null $level The level (optional)
      *
      * @return self The instance
      */
