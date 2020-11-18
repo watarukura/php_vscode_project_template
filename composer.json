@@ -23,13 +23,13 @@
         "ext-pdo": "*"
     },
     "scripts": {
-        "cs": [
+        "fix": [
             "php-cs-fixer fix --allow-risky=yes public/",
             "php-cs-fixer fix --allow-risky=yes src/",
             "php-cs-fixer fix --allow-risky=yes config/",
             "php-cs-fixer fix --allow-risky=yes tests/"
         ],
-        "lint": "@cs --dry-run",
+        "lint": "@fix --dry-run",
         "test": [
             "phpunit --configuration phpunit.xml",
             "@lint"
