@@ -1,5 +1,8 @@
 <?php
 
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
 use Psr\Container\ContainerInterface;
 use Slim\App;
 use Slim\Factory\AppFactory;
@@ -34,17 +37,14 @@ return [
         return new LoggerFactory($container->get('settings')['logger']);
     },
 
-    PDO::class => function (ContainerInterface $container) {
+    // Database connection
+    Connection::class => function (ContainerInterface $container) {
+        $config = new Configuration();
         $settings = $container->get('settings')['db'];
+        return DriverManager::getConnection($settings, $config);
+    },
 
-        $host = $settings['host'];
-        $dbname = $settings['database'];
-        $username = $settings['username'];
-        $password = $settings['password'];
-        $charset = $settings['charset'];
-        $flags = $settings['flags'];
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-
-        return new PDO($dsn, $username, $password, $flags);
+    PDO::class => function (ContainerInterface $container) {
+        return $container->get(Connection::class)->getWrappedConnection();
     },
 ];
