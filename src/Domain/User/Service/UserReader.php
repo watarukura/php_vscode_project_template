@@ -5,6 +5,7 @@ namespace App\Domain\User\Service;
 use App\Domain\User\Data\UserReaderData;
 use App\Domain\User\Repository\UserReaderRepository;
 use App\Exception\ValidationException;
+use Doctrine\DBAL\Exception;
 
 /**
  * Service.
@@ -31,9 +32,8 @@ final class UserReader
      *
      * @param int $userId The user id
      *
-     * @throws ValidationException
-     *
      * @return UserReaderData The user data
+     * @throws Exception
      */
     public function getUserDetails(int $userId): UserReaderData
     {
@@ -42,8 +42,6 @@ final class UserReader
             throw new ValidationException('User ID required');
         }
 
-        $user = $this->repository->getUserById($userId);
-
-        return $user;
+        return $this->repository->getUserById($userId);
     }
 }

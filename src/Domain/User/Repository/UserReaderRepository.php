@@ -3,8 +3,9 @@
 namespace App\Domain\User\Repository;
 
 use App\Domain\User\Data\UserReaderData;
+use Doctrine\DBAL\Connection;
 use DomainException;
-use PDO;
+use Exception;
 
 /**
  * Repository.
@@ -12,16 +13,16 @@ use PDO;
 class UserReaderRepository
 {
     /**
-     * @var PDO The database connection
+     * @var Connection The database connection
      */
     private $connection;
 
     /**
      * Constructor.
      *
-     * @param PDO $connection The database connection
+     * @param Connection $connection The database connection
      */
-    public function __construct(PDO $connection)
+    public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }
@@ -31,17 +32,25 @@ class UserReaderRepository
      *
      * @param int $userId The user id
      *
-     * @throws DomainException
+     * @return mixed The user data
+     * @throws \Doctrine\DBAL\Exception
      *
-     * @return UserReaderData The user data
+     * @throws DomainException
      */
     public function getUserById(int $userId): UserReaderData
     {
-        $sql = "SELECT id, username, first_name, last_name, email FROM users WHERE id = :id;";
-        $statement = $this->connection->prepare($sql);
-        $statement->execute(['id' => $userId]);
-
-        $row = $statement->fetch();
+        $query = $this->connection->createQueryBuilder();
+        try {
+            $row = $query
+                ->select('id', 'username', 'first_name', 'last_name', 'email')
+                ->from('users')
+                ->where('id = :id')
+                ->setParameter('id', $userId)
+                ->execute()
+                ->fetchAssociative();
+        } catch (Exception $exception) {
+            throw $exception;
+        }
 
         if (!$row) {
             throw new DomainException(sprintf('User not found: %s', $userId));
