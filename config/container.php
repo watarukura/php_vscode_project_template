@@ -41,6 +41,7 @@ return [
     Connection::class => function (ContainerInterface $container) {
         $config = new Configuration();
         $settings = $container->get('settings')['db'];
+        /** @phpstan-ignore-next-line */
         return DriverManager::getConnection($settings, $config);
     },
 

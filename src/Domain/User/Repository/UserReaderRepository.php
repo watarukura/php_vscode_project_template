@@ -4,6 +4,7 @@ namespace App\Domain\User\Repository;
 
 use App\Domain\User\Data\UserReaderData;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Result;
 use DomainException;
 use Exception;
 
@@ -32,23 +33,29 @@ class UserReaderRepository
      *
      * @param int $userId The user id
      *
-     * @return mixed The user data
+     * @return UserReaderData The user data
      * @throws \Doctrine\DBAL\Exception
      *
      * @throws DomainException
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
     public function getUserById(int $userId): UserReaderData
     {
         $query = $this->connection->createQueryBuilder();
+        $row = [];
         try {
-            $row = $query
+            $stmt = $query
                 ->select('id', 'username', 'first_name', 'last_name', 'email')
                 ->from('users')
                 ->where('id = :id')
                 ->setParameter('id', $userId)
-                ->execute()
-                ->fetchAssociative();
+                ->execute();
+            if ($stmt instanceof Result) {
+                $row = $stmt->fetchAssociative();
+            }
         } catch (Exception $exception) {
+            throw $exception;
+        } catch (\Doctrine\DBAL\Driver\Exception $exception) {
             throw $exception;
         }
 
