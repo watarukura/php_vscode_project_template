@@ -38,21 +38,20 @@ $settings['logger'] = [
 
 // Database settings
 $settings['db'] = [
-    'driver' => 'mysql',
-    'host' => 'db:3306',
+    'driver' => 'pdo_mysql',
     'encoding' => 'utf8mb4',
     'charset' => 'utf8mb4',
     'collation' => 'utf8mb4_bin',
     // Enable identifier quoting
     'quoteIdentifiers' => true,
     // Set to null to use MySQL servers timezone
-    'timezone' => null,
+    'timezone' => 'Asia/Tokyo',
     // Disable meta data cache
     'cacheMetadata' => false,
     // Disable query logging
     'log' => false,
     // PDO options
-    'flags' => [
+    'driverOptions' => [
         // Turn off persistent connections
         PDO::ATTR_PERSISTENT => false,
         // Enable exceptions

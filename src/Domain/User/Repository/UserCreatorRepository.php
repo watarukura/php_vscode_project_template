@@ -2,7 +2,8 @@
 
 namespace App\Domain\User\Repository;
 
-use PDO;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 
 /**
  * Repository.
@@ -10,16 +11,16 @@ use PDO;
 class UserCreatorRepository
 {
     /**
-     * @var PDO The database connection
+     * @var Connection The database connection
      */
     private $connection;
 
     /**
      * Constructor.
      *
-     * @param PDO $connection The database connection
+     * @param Connection $connection The database connection
      */
-    public function __construct(PDO $connection)
+    public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }
@@ -30,6 +31,7 @@ class UserCreatorRepository
      * @param array<string,string> $user The user
      *
      * @return int The new ID
+     * @throws Exception
      */
     public function insertUser(array $user): int
     {
@@ -40,13 +42,7 @@ class UserCreatorRepository
             'email' => $user['email'],
         ];
 
-        $sql = "INSERT INTO users SET
-                username=:username,
-                first_name=:first_name,
-                last_name=:last_name,
-                email=:email;";
-
-        $this->connection->prepare($sql)->execute($row);
+        $this->connection->insert('users', $row);
 
         return (int)$this->connection->lastInsertId();
     }

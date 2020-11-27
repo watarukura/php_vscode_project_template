@@ -5,4 +5,5 @@ build/
 .phpunit.result.cache
 .env
 docker/nginx/cache/
+docker/nginx/run/nginx.pid
 docker/php-fpm/tmp/
