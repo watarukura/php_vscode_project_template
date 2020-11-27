@@ -35,6 +35,37 @@ jobs:
           channel: '#ci_my_projects'
           url: ${{ secrets.SLACK_WEBHOOK }}
 
+  analyse:
+    name: Analyse PHP Code
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP 7.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.3'
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run test suite
+        run: composer analyse
+
+      - name: Notify Result to Slack
+        uses: homoluctus/slatify@master
+        if: always()
+        with:
+          type: ${{ job.status }}
+          job_name: ':php: *Lint check*'
+          channel: '#ci_my_projects'
+          url: ${{ secrets.SLACK_WEBHOOK }}
+
   lint_except_php:
     name: Lint Except PHP Code Base
     runs-on: ubuntu-latest
