@@ -2,6 +2,7 @@
 
 namespace App\Domain\User\Repository;
 
+use App\Domain\User\Data\UserCreatorData;
 use PDO;
 
 /**
@@ -27,17 +28,17 @@ class UserCreatorRepository
     /**
      * Insert user row.
      *
-     * @param array<string,string> $user The user
+     * @param UserCreatorData $user The user
      *
      * @return int The new ID
      */
-    public function insertUser(array $user): int
+    public function insertUser(UserCreatorData $user): int
     {
         $row = [
-            'username' => $user['username'],
-            'first_name' => $user['first_name'],
-            'last_name' => $user['last_name'],
-            'email' => $user['email'],
+            'username' => $user->username,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
         ];
 
         $sql = "INSERT INTO users SET

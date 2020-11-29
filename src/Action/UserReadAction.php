@@ -7,9 +7,27 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Action
+ * @OA\Get(
+ *   tags={"user"},
+ *   path="/users/{id}",
+ *   operationId="getUser",
+ *   @OA\Parameter(
+ *          name="id",
+ *          in="path",
+ *          required=true,
+ *          description="User id",
+ *          @OA\Schema(
+ *              type="integer"
+ *          )
+ *   ),
+ *   @OA\Response(
+ *     response=200,
+ *     description="Read single user",
+ *     @OA\JsonContent(ref="#/components/schemas/UserReader")
+ *   )
+ * )
  */
-final class UserReadAction
+final class UserReadAction extends Action
 {
     /**
      * @var UserReader
@@ -50,8 +68,8 @@ final class UserReadAction
         $result = [
             'user_id' => $userData->id,
             'username' => $userData->username,
-            'first_name' => $userData->firstName,
-            'last_name' => $userData->lastName,
+            'first_name' => $userData->first_name,
+            'last_name' => $userData->last_name,
             'email' => $userData->email,
         ];
 

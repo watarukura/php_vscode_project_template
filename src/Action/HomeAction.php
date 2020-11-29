@@ -5,7 +5,7 @@ namespace App\Action;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class HomeAction
+final class HomeAction extends Action
 {
     public function __invoke(
         ServerRequestInterface $request,
