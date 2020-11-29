@@ -4,9 +4,8 @@ namespace App\Domain\User\Service;
 
 use App\Domain\User\Data\UserCreatorData;
 use App\Domain\User\Repository\UserCreatorRepository;
-use App\Exception\ValidationException;
 use App\Factory\LoggerFactory;
-use Petstore30\User;
+use Doctrine\DBAL\Exception;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -29,6 +28,7 @@ final class UserCreator
      * The constructor.
      *
      * @param UserCreatorRepository $repository The repository
+     * @param LoggerFactory         $logger
      */
     public function __construct(UserCreatorRepository $repository, LoggerFactory $logger)
     {
@@ -44,6 +44,7 @@ final class UserCreator
      * @param UserCreatorData $data The form data
      *
      * @return int The new user ID
+     * @throws Exception
      */
     public function createUser(UserCreatorData $data): int
     {

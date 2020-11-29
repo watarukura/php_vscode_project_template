@@ -4,8 +4,10 @@ namespace App\Domain\User\Repository;
 
 use App\Domain\User\Data\UserCreatorData;
 use App\Domain\User\Data\UserReaderData;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Driver\Result;
 use DomainException;
-use PDO;
+use Exception;
 
 /**
  * Repository.
@@ -13,16 +15,16 @@ use PDO;
 class UserReaderRepository
 {
     /**
-     * @var PDO The database connection
+     * @var Connection The database connection
      */
     private $connection;
 
     /**
      * Constructor.
      *
-     * @param PDO $connection The database connection
+     * @param Connection $connection The database connection
      */
-    public function __construct(PDO $connection)
+    public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }
@@ -33,16 +35,35 @@ class UserReaderRepository
      * @param int $userId The user id
      *
      * @return UserReaderData The user data
+<<<<<<< HEAD
      *@throws DomainException
      *
+=======
+     * @throws \Doctrine\DBAL\Exception
+     *
+     * @throws DomainException
+     * @throws \Doctrine\DBAL\Driver\Exception
+>>>>>>> 4a97ab1f2a26dac089bff10584fcf537d4ac3ece
      */
     public function getUserById(int $userId): UserReaderData
     {
-        $sql = "SELECT id, username, first_name, last_name, email FROM users WHERE id = :id;";
-        $statement = $this->connection->prepare($sql);
-        $statement->execute(['id' => $userId]);
-
-        $row = $statement->fetch();
+        $query = $this->connection->createQueryBuilder();
+        $row = [];
+        try {
+            $stmt = $query
+                ->select('id', 'username', 'first_name', 'last_name', 'email')
+                ->from('users')
+                ->where('id = :id')
+                ->setParameter('id', $userId)
+                ->execute();
+            if ($stmt instanceof Result) {
+                $row = $stmt->fetchAssociative();
+            }
+        } catch (Exception $exception) {
+            throw $exception;
+        } catch (\Doctrine\DBAL\Driver\Exception $exception) {
+            throw $exception;
+        }
 
         if (!$row) {
             throw new DomainException(sprintf('User not found: %s', $userId));
