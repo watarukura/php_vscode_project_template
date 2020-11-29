@@ -3,6 +3,7 @@
 namespace App\Action;
 
 use App\Domain\User\Service\UserReader;
+use Doctrine\DBAL\Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -47,11 +48,13 @@ final class UserReadAction extends Action
     /**
      * Invoke.
      *
-     * @param ServerRequestInterface $request The request
-     * @param ResponseInterface $response The response
-     * @param array<string,string> $args The route arguments
+     * @param ServerRequestInterface $request  The request
+     * @param ResponseInterface      $response The response
+     * @param array<string,string>   $args     The route arguments
      *
      * @return ResponseInterface The response
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws Exception
      */
     public function __invoke(
         ServerRequestInterface $request,

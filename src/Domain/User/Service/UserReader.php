@@ -34,12 +34,10 @@ final class UserReader
      * @param int $userId The user id
      *
      * @return UserReaderData The user data
-<<<<<<< HEAD
-     *@throws ValidationException
      *
-=======
+     * @throws ValidationException
      * @throws Exception
->>>>>>> 4a97ab1f2a26dac089bff10584fcf537d4ac3ece
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
     public function getUserDetails(int $userId): UserReaderData
     {

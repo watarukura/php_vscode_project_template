@@ -2,7 +2,6 @@
 
 namespace App\Domain\User\Repository;
 
-use App\Domain\User\Data\UserCreatorData;
 use App\Domain\User\Data\UserReaderData;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Result;
@@ -35,15 +34,10 @@ class UserReaderRepository
      * @param int $userId The user id
      *
      * @return UserReaderData The user data
-<<<<<<< HEAD
-     *@throws DomainException
-     *
-=======
-     * @throws \Doctrine\DBAL\Exception
      *
      * @throws DomainException
      * @throws \Doctrine\DBAL\Driver\Exception
->>>>>>> 4a97ab1f2a26dac089bff10584fcf537d4ac3ece
+     * @throws \Doctrine\DBAL\Exception
      */
     public function getUserById(int $userId): UserReaderData
     {
