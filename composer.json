@@ -10,18 +10,19 @@
         }
     ],
     "require-dev": {
-        "phpunit/phpunit": "^9.4",
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12.51",
-        "vimeo/psalm": "^4.0"
+        "phpunit/phpunit": "^9.4",
+        "vimeo/psalm": "^4.0",
+        "zircote/swagger-php": "^3.1"
     },
     "require": {
-        "ext-pdo": "*",
         "doctrine/dbal": "^3.0",
         "monolog/monolog": "^2.1",
         "php-di/php-di": "^6.3",
         "slim/psr7": "^1.2",
         "slim/slim": "^4.5",
+        "ext-pdo": "*",
         "ext-json": "*"
     },
     "scripts": {
@@ -43,6 +44,9 @@
             "phpstan analyze --level=max src",
             "phpstan analyze --level=max config",
             "psalm"
+        ],
+        "openapi": [
+            "php cli/openapi_gen.php > doc/openapi.yml"
         ]
     },
     "autoload": {

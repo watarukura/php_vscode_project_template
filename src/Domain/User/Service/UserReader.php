@@ -2,6 +2,7 @@
 
 namespace App\Domain\User\Service;
 
+use App\Domain\User\Data\UserCreatorData;
 use App\Domain\User\Data\UserReaderData;
 use App\Domain\User\Repository\UserReaderRepository;
 use App\Exception\ValidationException;
@@ -33,7 +34,12 @@ final class UserReader
      * @param int $userId The user id
      *
      * @return UserReaderData The user data
+<<<<<<< HEAD
+     *@throws ValidationException
+     *
+=======
      * @throws Exception
+>>>>>>> 4a97ab1f2a26dac089bff10584fcf537d4ac3ece
      */
     public function getUserDetails(int $userId): UserReaderData
     {
