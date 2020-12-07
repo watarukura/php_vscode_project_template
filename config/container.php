@@ -1,5 +1,6 @@
 <?php
 
+use Aws\DynamoDb\DynamoDbClient;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
@@ -47,5 +48,12 @@ return [
 
     PDO::class => function (ContainerInterface $container) {
         return $container->get(Connection::class)->getWrappedConnection();
+    },
+
+    // DynamoDB connection
+    DynamoDbClient::class => function (ContainerInterface $container) {
+        $setting = $container->get('settings')['ddb'];
+        $sdk = new Aws\Sdk($setting);
+        return $sdk->createDynamoDb();
     },
 ];

@@ -5,6 +5,7 @@ namespace App\Domain\User\Service;
 use App\Domain\User\Data\UserCreatorData;
 use App\Domain\User\Data\UserReaderData;
 use App\Domain\User\Repository\UserReaderRepository;
+use App\Domain\User\Repository\UserReaderRepositoryDdb;
 use App\Exception\ValidationException;
 use Doctrine\DBAL\Exception;
 
@@ -21,9 +22,9 @@ final class UserReader
     /**
      * The constructor.
      *
-     * @param UserReaderRepository $repository The repository
+     * @param UserReaderRepositoryDdb $repository The repository
      */
-    public function __construct(UserReaderRepository $repository)
+    public function __construct(UserReaderRepositoryDdb $repository)
     {
         $this->repository = $repository;
     }

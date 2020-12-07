@@ -4,6 +4,7 @@ namespace App\Domain\User\Service;
 
 use App\Domain\User\Data\UserCreatorData;
 use App\Domain\User\Repository\UserCreatorRepository;
+use App\Domain\User\Repository\UserCreatorRepositoryDdb;
 use App\Factory\LoggerFactory;
 use Doctrine\DBAL\Exception;
 use Psr\Log\LoggerInterface;
@@ -27,10 +28,10 @@ final class UserCreator
     /**
      * The constructor.
      *
-     * @param UserCreatorRepository $repository The repository
-     * @param LoggerFactory         $logger
+     * @param UserCreatorRepositoryDdb $repository The repository
+     * @param LoggerFactory            $logger
      */
-    public function __construct(UserCreatorRepository $repository, LoggerFactory $logger)
+    public function __construct(UserCreatorRepositoryDdb $repository, LoggerFactory $logger)
     {
         $this->repository = $repository;
         $this->logger = $logger
