@@ -22,45 +22,50 @@ $settings['error'] = [
     // Should be set to false in production
     'display_error_details' => true,
     // Should be set to false for unit tests
-    'log_errors' => true,
+    'log_errors'            => true,
     // Display error details in error log
-    'log_error_details' => true,
+    'log_error_details'     => true,
 ];
 
 // Logger settings
 $settings['logger'] = [
-    'name' => 'app',
-    'path' => __DIR__ . '/../logs',
-    'filename' => 'app.log',
-    'level' => \Monolog\Logger::DEBUG,
+    'name'            => 'app',
+    'path'            => __DIR__ . '/../logs',
+    'filename'        => 'app.log',
+    'level'           => \Monolog\Logger::DEBUG,
     'file_permission' => 0775,
 ];
 
 // Database settings
 $settings['db'] = [
-    'driver' => 'pdo_mysql',
-    'encoding' => 'utf8mb4',
-    'charset' => 'utf8mb4',
-    'collation' => 'utf8mb4_bin',
+    'driver'           => 'pdo_mysql',
+    'encoding'         => 'utf8mb4',
+    'charset'          => 'utf8mb4',
+    'collation'        => 'utf8mb4_bin',
     // Enable identifier quoting
     'quoteIdentifiers' => true,
     // Set to null to use MySQL servers timezone
-    'timezone' => 'Asia/Tokyo',
+    'timezone'         => 'Asia/Tokyo',
     // Disable meta data cache
-    'cacheMetadata' => false,
+    'cacheMetadata'    => false,
     // Disable query logging
-    'log' => false,
+    'log'              => false,
     // PDO options
-    'driverOptions' => [
+    'driverOptions'    => [
         // Turn off persistent connections
-        PDO::ATTR_PERSISTENT => false,
+        PDO::ATTR_PERSISTENT         => false,
         // Enable exceptions
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         // Emulate prepared statements
-        PDO::ATTR_EMULATE_PREPARES => true,
+        PDO::ATTR_EMULATE_PREPARES   => true,
         // Set default fetch mode to array
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ],
+];
+
+// Database settings
+$settings['ddb'] = [
+    'version' => '2012-08-10',
 ];
 
 return $settings;

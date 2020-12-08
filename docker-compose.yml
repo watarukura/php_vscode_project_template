@@ -27,10 +27,12 @@ services:
       - DOCKER=1
       - XDEBUG_CONFIG=remote_host=host.docker.internal
       - AWS_ACCESS_KEY_ID=DUMMY
-      - AWS_SECRET_KEY_ID=DUMMY
+      - AWS_SECRET_ACCESS_KEY=DUMMY
       - AWS_DEFAULT_REGION=ap-northeast-1
       - AWS_DEFAULT_OUTPUT=json
       - APP_ENV=dev
+      # /home/www-data/.aws/credential の読み込みは不要なのでfalse指定する
+      - AWS_CSM_ENABLED=false
     ports:
       - '127.0.0.1:29000:9000'
     volumes:
@@ -39,7 +41,7 @@ services:
       - './docker/php-fpm/tmp:/tmp'
     depends_on:
       - db
-      - dynamodb
+      - ddb
 
   db:
     image: library/mysql:5.6
@@ -55,8 +57,14 @@ services:
       - "./docker/mysql/config/my.cfg:/etc/mysql/conf.d/config-file.cnf"
       - "./resources/migrations/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql"
 
-  dynamodb:
+
+  ddb:
     image: amazon/dynamodb-local:latest
-    restart: always
     ports:
-      - "127.0.0.1:28000:8000"
+      - '127.0.0.1:28000:8000'
+    environment:
+      - DATA_DIR=/tmp/data
+    volumes:
+      - ./docker/localstack/initaws.d:/docker-entrypoint-initaws.d
+      - ./docker/localstack/dynamodb:/tmp/dynamodb
+      - ./docker/localstack/data:/tmp/data

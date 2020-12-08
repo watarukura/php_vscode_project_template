@@ -17,13 +17,14 @@
         "zircote/swagger-php": "^3.1"
     },
     "require": {
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "aws/aws-sdk-php": "^3.164",
         "doctrine/dbal": "^3.0",
         "monolog/monolog": "^2.1",
         "php-di/php-di": "^6.3",
         "slim/psr7": "^1.2",
-        "slim/slim": "^4.5",
-        "ext-pdo": "*",
-        "ext-json": "*"
+        "slim/slim": "^4.5"
     },
     "scripts": {
         "fix": [
