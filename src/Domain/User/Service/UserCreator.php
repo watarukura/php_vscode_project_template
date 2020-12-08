@@ -15,7 +15,7 @@ use Psr\Log\LoggerInterface;
 final class UserCreator
 {
     /**
-     * @var UserCreatorRepository
+     * @var UserCreatorRepositoryDdb
      */
     private $repository;
 

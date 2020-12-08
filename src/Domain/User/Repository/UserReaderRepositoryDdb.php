@@ -14,7 +14,7 @@ use Exception;
 class UserReaderRepositoryDdb
 {
     /**
-     * @var
+     * @var DynamoDbClient
      */
     private $client;
 
@@ -42,7 +42,7 @@ class UserReaderRepositoryDdb
     {
         try {
             $marshaler = new Marshaler();
-            $key = $marshaler->marshalJson(json_encode([
+            $key = $marshaler->marshalJson((string)json_encode([
                 'id' => $userId
             ]));
             $row = $this->client->getItem([

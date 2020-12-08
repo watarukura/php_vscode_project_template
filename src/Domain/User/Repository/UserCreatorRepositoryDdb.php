@@ -15,7 +15,7 @@ use Exception;
 class UserCreatorRepositoryDdb
 {
     /**
-     * @var
+     * @var DynamoDbClient
      */
     private $client;
 
@@ -38,46 +38,44 @@ class UserCreatorRepositoryDdb
      */
     public function insertUser(UserCreatorData $user): int
     {
-        $marshaler = new Marshaler();
-
         $id = $this->incrementUserId();
 
-        $row = [
-            'id' => $id,
-            'username' => $user->username,
+        $marshaler = new Marshaler();
+        $item = $marshaler->marshalJson((string)json_encode([
+            'id'         => $id,
+            'username'   => $user->username,
             'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
-            'email' => $user->email,
-        ];
-        $item = $marshaler->marshalJson(json_encode($row));
+            'last_name'  => $user->last_name,
+            'email'      => $user->email,
+        ]));
 
         $this->client->putItem([
-            'TableName' =>  'users',
-            'Item' => $item,
+            'TableName' => 'users',
+            'Item'      => $item,
         ]);
 
-        return (int)$row['id'];
+        return $id;
     }
 
     private function incrementUserId(): int
     {
         $marshaler = new Marshaler();
-        $key = $marshaler->marshalJson(json_encode([
+        $key = $marshaler->marshalJson((string)json_encode([
             'id' => 'users'
         ]));
-        $eav = $marshaler->marshalJson(json_encode([
+        $eav = $marshaler->marshalJson((string)json_encode([
             ':increment' => 1
         ]));
         $ean = [
             '#c' => 'counter'
         ];
         $params = [
-            'TableName' => 'counter',
-            'Key' => $key,
-            'UpdateExpression' => 'ADD #c :increment',
+            'TableName'                 => 'counter',
+            'Key'                       => $key,
+            'UpdateExpression'          => 'ADD #c :increment',
             'ExpressionAttributeValues' => $eav,
-            'ExpressionAttributeNames' => $ean,
-            'ReturnValues' => 'UPDATED_NEW'
+            'ExpressionAttributeNames'  => $ean,
+            'ReturnValues'              => 'UPDATED_NEW'
         ];
         try {
             $result = $this->client->updateItem($params);

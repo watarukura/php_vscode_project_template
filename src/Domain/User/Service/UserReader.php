@@ -15,7 +15,7 @@ use Doctrine\DBAL\Exception;
 final class UserReader
 {
     /**
-     * @var UserReaderRepository
+     * @var UserReaderRepositoryDdb
      */
     private $repository;
 
