@@ -2,8 +2,8 @@
 
 namespace App\Test\TestCase\Action;
 
-use App\Domain\User\Data\UserCreatorData;
-use App\Domain\User\Repository\UserReaderRepository;
+use App\Domain\User\Data\UserReaderData;
+use App\Domain\User\Repository\UserReaderRepositoryDdb;
 use App\Test\AppTestTrait;
 use PHPUnit\Framework\TestCase;
 
@@ -19,15 +19,15 @@ class UserReaderActionTest extends TestCase
      *
      * @dataProvider provideUserReaderAction
      *
-     * @param UserCreatorData $user     The user
-     * @param array           $expected The expected result
+     * @param UserReaderData $user     The user
+     * @param array          $expected The expected result
      *
      * @return void
      */
-    public function testUserReaderAction(UserCreatorData $user, array $expected): void
+    public function testUserReaderAction(UserReaderData $user, array $expected): void
     {
         // Mock the repository resultset
-        $this->mock(UserReaderRepository::class)->method('getUserById')->willReturn($user);
+        $this->mock(UserReaderRepositoryDdb::class)->method('getUserById')->willReturn($user);
 
         // Create request with method and url
         $request = $this->createRequest('GET', '/users/1');
@@ -47,22 +47,22 @@ class UserReaderActionTest extends TestCase
      */
     public function provideUserReaderAction(): array
     {
-        $user = new UserCreatorData();
+        $user = new UserReaderData();
         $user->id = 1;
         $user->username = 'admin';
-        $user->email = 'john.doe@example.com';
         $user->first_name = 'John';
         $user->last_name = 'Doe';
+        $user->email = 'john.doe@example.com';
 
         return [
             'User' => [
                 $user,
                 [
-                    'user_id' => 1,
-                    'username' => 'admin',
+                    'user_id'    => 1,
+                    'username'   => 'admin',
                     'first_name' => 'John',
-                    'last_name' => 'Doe',
-                    'email' => 'john.doe@example.com',
+                    'last_name'  => 'Doe',
+                    'email'      => 'john.doe@example.com',
                 ]
             ]
         ];
