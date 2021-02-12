@@ -67,8 +67,12 @@ class UserReaderRepositoryDdb
             ]);
             if (!$result->get('Items')) {
                 throw new DomainException(sprintf('User not found: %s', $userId));
+            } else {
+//                var_dump($result->get('Items')[0]);
+                $marshaler = new Marshaler();
+//                var_dump($marshaler->unmarshalItem($result->get('Items')[0], true));
+                $result_item = $marshaler->unmarshalItem($result->get('Items')[0], true);
             }
-            var_dump($result->get('Items')[0]);
         } catch (Exception $exception) {
             throw $exception;
         }
@@ -82,10 +86,15 @@ class UserReaderRepositoryDdb
 //        $user->last_name = (string)$row['Item']['last_name']['S'];
 //        $user->email = (string)$row['Item']['email']['S'];
 //        $user->id = (int)$result['Items'][0]['id']['N'];
-        $user->username = (string)$result['Items'][0]['username']['S'];
-        $user->first_name = (string)$result['Items'][0]['first_name']['S'];
-        $user->last_name = (string)$result['Items'][0]['last_name']['S'];
-        $user->email = (string)$result['Items'][0]['email']['S'];
+//        $user->username = (string)$result['Items'][0]['user_name']['S'];
+//        $user->first_name = (string)$result['Items'][0]['first_name']['S'];
+//        $user->last_name = (string)$result['Items'][0]['last_name']['S'];
+//        $user->email = (string)$result['Items'][0]['email']['S'];
+        $user->id = $result_item->id;
+        $user->username = $result_item->user_name;
+        $user->first_name = $result_item->first_name;
+        $user->last_name = $result_item->last_name;
+        $user->email = $result_item->email;
 
         return $user;
     }
