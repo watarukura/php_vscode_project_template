@@ -35,25 +35,11 @@ class UserCreatorRepositoryDdb
      * @param UserCreatorData $user The user
      *
      * @return int The new ID
+     * @throws Exception
      */
     public function insertUser(UserCreatorData $user): int
     {
         $id = $this->incrementUserId();
-
-//        $marshaler = new Marshaler();
-//        $item = $marshaler->marshalJson((string)json_encode([
-//            'id'         => $id,
-//            'username'   => $user->username,
-//            'first_name' => $user->first_name,
-//            'last_name'  => $user->last_name,
-//            'email'      => $user->email,
-//        ]));
-//
-//        $this->client->putItem([
-//            'TableName' => 'users',
-//            'Item'      => $item,
-//        ]);
-//
 
         try {
             $this->client->executeStatement([
