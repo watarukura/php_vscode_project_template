@@ -41,28 +41,36 @@ class UserReaderRepositoryDdb
     public function getUserById(int $userId): UserReaderData
     {
         try {
-            $marshaler = new Marshaler();
-            $key = $marshaler->marshalJson((string)json_encode([
-                'id' => $userId
-            ]));
-            $row = $this->client->getItem([
-                'TableName'      => 'users',
-                'Key'            => $key,
+            $result = $this->client->executeStatement([
+                'Parameters' => [
+                    [
+                        'N' => $userId
+                    ]
+                ],
+                'Statement'  => 'SELECT * FROM users WHERE id = ?'
             ]);
-            if (!$row->get('Item')) {
+            $items = $result->get('Items') ?? [];
+            if (!$items) {
                 throw new DomainException(sprintf('User not found: %s', $userId));
+            } else {
+                $marshaler = new Marshaler();
+                $result_item = json_decode(
+                    $marshaler->unmarshalJson($items[0]),
+                    true
+                );
             }
         } catch (Exception $exception) {
             throw $exception;
         }
 
+
         // Map array to data object
         $user = new UserReaderData();
-        $user->id = (int)$row['Item']['id']['N'];
-        $user->username = (string)$row['Item']['username']['S'];
-        $user->first_name = (string)$row['Item']['first_name']['S'];
-        $user->last_name = (string)$row['Item']['last_name']['S'];
-        $user->email = (string)$row['Item']['email']['S'];
+        $user->id = $result_item['id'];
+        $user->username = $result_item['user_name'];
+        $user->first_name = $result_item['first_name'];
+        $user->last_name = $result_item['last_name'];
+        $user->email = $result_item['email'];
 
         return $user;
     }
