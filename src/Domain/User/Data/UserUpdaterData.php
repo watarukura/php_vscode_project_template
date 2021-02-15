@@ -19,34 +19,34 @@ final class UserUpdaterData implements JsonSerializable
     public $id;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="johndoe")
      */
-    public $username;
+    public $username = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="John")
      */
-    public $first_name;
+    public $first_name = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="Doe")
      */
-    public $last_name;
+    public $last_name = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="johndoe@example.com")
      */
-    public $email;
+    public $email = null;
 
     /**
      * UserUpdaterData constructor.
      *
      * @param int   $userId
-     * @param array $args
+     * @param array<string,string> $args
      */
     public function __construct(int $userId, array $args)
     {
@@ -57,6 +57,9 @@ final class UserUpdaterData implements JsonSerializable
         $this->email = $args['email'] ?? null;
     }
 
+    /**
+     * @return array<string, int|string|null>
+     */
     public function jsonSerialize(): array
     {
         return [
