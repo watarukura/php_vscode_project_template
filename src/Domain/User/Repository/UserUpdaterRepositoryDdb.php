@@ -76,6 +76,6 @@ class UserUpdaterRepositoryDdb
             throw $exception;
         }
 
-        return new UserUpdaterData($userUpdaterData->id, $result_item);
+        return new UserUpdaterData($result_item);
     }
 }

@@ -45,16 +45,15 @@ final class UserUpdaterData implements JsonSerializable
     /**
      * UserUpdaterData constructor.
      *
-     * @param int   $userId
-     * @param array<string,string> $args
+     * @param array<string,string|int> $args
      */
-    public function __construct(int $userId, array $args)
+    public function __construct(array $args)
     {
-        $this->id = $userId;
-        $this->username = $args['username'] ?? null;
-        $this->first_name = $args['first_name'] ?? null;
-        $this->last_name = $args['last_name'] ?? null;
-        $this->email = $args['email'] ?? null;
+        $this->id = (int)$args['id'];
+        $this->username = $args['username'] ? strval($args['username']) : null;
+        $this->first_name = $args['first_name'] ? strval($args['first_name']) : null;
+        $this->last_name = $args['last_name'] ? strval($args['last_name']) : null;
+        $this->email = $args['email'] ? strval($args['email']) : null;
     }
 
     /**

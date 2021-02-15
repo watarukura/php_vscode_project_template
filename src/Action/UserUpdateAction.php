@@ -57,8 +57,9 @@ final class UserUpdateAction extends Action
 
         // Collect input from the HTTP request
         $data = (array)$request->getParsedBody();
+        $data['id'] = $userId;
 
-        $userUpdaterData = new UserUpdaterData($userId, $data);
+        $userUpdaterData = new UserUpdaterData($data);
 
         // Invoke the Domain with inputs and retain the result
         $userData = $this->userUpdater->updateUser($userUpdaterData);
