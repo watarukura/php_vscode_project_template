@@ -58,7 +58,7 @@ paths:
 components:
   schemas:
     UserCreatorData:
-      title: UserCreaotr
+      title: UserCreator
       description: 'A simple user creator model.'
       required:
         - username
