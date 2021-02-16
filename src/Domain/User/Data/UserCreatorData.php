@@ -6,7 +6,7 @@ use App\Exception\ValidationException;
 
 /**
  * @OA\Schema(
- *     title="UserCreaotr",
+ *     title="UserCreator",
  *     required={"username", "email"},
  *     description="A simple user creator model."
  * )

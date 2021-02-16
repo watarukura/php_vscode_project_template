@@ -35,9 +35,7 @@ class UserReaderRepository
      *
      * @return UserReaderData The user data
      *
-     * @throws DomainException
      * @throws \Doctrine\DBAL\Driver\Exception
-     * @throws \Doctrine\DBAL\Exception
      */
     public function getUserById(int $userId): UserReaderData
     {
@@ -45,7 +43,7 @@ class UserReaderRepository
         $row = [];
         try {
             $stmt = $query
-                ->select('id', 'username', 'first_name', 'last_name', 'email')
+                ->select('*')
                 ->from('users')
                 ->where('id = :id')
                 ->setParameter('id', $userId)
@@ -53,9 +51,7 @@ class UserReaderRepository
             if ($stmt instanceof Result) {
                 $row = $stmt->fetchAssociative();
             }
-        } catch (Exception $exception) {
-            throw $exception;
-        } catch (\Doctrine\DBAL\Driver\Exception $exception) {
+        } catch (Exception | \Doctrine\DBAL\Driver\Exception $exception) {
             throw $exception;
         }
 

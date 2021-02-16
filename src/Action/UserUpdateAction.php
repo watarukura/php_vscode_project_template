@@ -25,7 +25,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *             @OA\Schema(ref="#/components/schemas/userUpdater")
  *         )
  *     )
-  * )
+ * )
  */
 final class UserUpdateAction extends Action
 {
@@ -42,7 +42,7 @@ final class UserUpdateAction extends Action
     /**
      * @param ServerRequestInterface $request
      * @param ResponseInterface      $response
-     * @param array                  $args
+     * @param array<string,string|int>   $args
      *
      * @return ResponseInterface
      * @throws Exception
@@ -57,19 +57,20 @@ final class UserUpdateAction extends Action
 
         // Collect input from the HTTP request
         $data = (array)$request->getParsedBody();
+        $data['id'] = $userId;
 
-        $userUpdaterData = new UserUpdaterData($userId, $data);
+        $userUpdaterData = new UserUpdaterData($data);
 
         // Invoke the Domain with inputs and retain the result
         $userData = $this->userUpdater->updateUser($userUpdaterData);
 
         // Transform the result into the JSON representation
         $result = [
-            'user_id' => $userData->id,
-            'username' => $userData->username,
+            'user_id'    => $userData->id,
+            'username'   => $userData->username,
             'first_name' => $userData->first_name,
-            'last_name' => $userData->last_name,
-            'email' => $userData->email,
+            'last_name'  => $userData->last_name,
+            'email'      => $userData->email,
         ];
 
         // Build the HTTP response

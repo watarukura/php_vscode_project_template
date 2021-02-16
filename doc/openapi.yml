@@ -6,6 +6,21 @@ servers:
   -
     url: 'http://localhost:28081'
 paths:
+  /users/:
+    post:
+      tags:
+        - user
+      operationId: putUsers
+      requestBody:
+        description: 'user body'
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/userCreator'
+      responses:
+        '200':
+          description: 'create user'
   '/users/{id}':
     get:
       tags:
@@ -25,11 +40,45 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/UserReader'
+    post:
+      tags:
+        - user
+      operationId: updateUsers
+      requestBody:
+        description: 'user body'
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/userUpdater'
+      responses:
+        '200':
+          description: 'update user'
 components:
   schemas:
+    UserCreatorData:
+      title: UserCreator
+      description: 'A simple user creator model.'
+      required:
+        - username
+        - email
+      properties:
+        username:
+          type: string
+          example: johndoe
+        first_name:
+          type: string
+          example: John
+        last_name:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: johndoe@example.com
+      type: object
     UserReaderData:
-      title: User
+      title: UserReader
       description: 'A simple user model.'
       properties:
         id:
@@ -40,10 +89,32 @@ components:
         username:
           type: string
           example: johndoe
-        firstName:
+        first_name:
           type: string
           example: John
-        lastName:
+        last_name:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: johndoe@example.com
+      type: object
+    UserUpdaterData:
+      title: UserUpdater
+      description: 'A simple user model.'
+      properties:
+        id:
+          type: integer
+          format: int64
+          readOnly: true
+          example: 1
+        username:
+          type: string
+          example: johndoe
+        first_name:
+          type: string
+          example: John
+        last_name:
           type: string
           example: Doe
         email:

@@ -41,15 +41,17 @@ class UserUpdaterRepositoryDdb
     {
         $statement = 'UPDATE users ';
         $parameters = [];
+        $marshaler = new Marshaler();
         foreach ($userUpdaterData->jsonSerialize() as $k => $v) {
             if ($k === 'id') {
+                // TODO: Omit Partition Key
                 continue;
             }
-            $statement .= 'SET ' . $k . '=? ';
-            // TODO: 'S' only now
-            $parameters[] = [
-                'S' => $v
-            ];
+            if (is_null($v)) {
+                continue;
+            }
+            $statement .= sprintf('SET %s=? ', $k);
+            $parameters[] = $marshaler->marshalValue($v);
         }
         $statement .= ' WHERE id = ? RETURNING ALL NEW *';
         $parameters[] = [
@@ -65,7 +67,6 @@ class UserUpdaterRepositoryDdb
             if (!$items) {
                 throw new DomainException(sprintf('User not found: %s', $userUpdaterData->id));
             } else {
-                $marshaler = new Marshaler();
                 $result_item = json_decode(
                     $marshaler->unmarshalJson($items[0]),
                     true
@@ -75,6 +76,6 @@ class UserUpdaterRepositoryDdb
             throw $exception;
         }
 
-        return new UserUpdaterData($userUpdaterData->id, $result_item);
+        return new UserUpdaterData($result_item);
     }
 }

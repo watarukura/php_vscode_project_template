@@ -19,44 +19,46 @@ final class UserUpdaterData implements JsonSerializable
     public $id;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="johndoe")
      */
-    public $username;
+    public $username = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="John")
      */
-    public $first_name;
+    public $first_name = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="Doe")
      */
-    public $last_name;
+    public $last_name = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="johndoe@example.com")
      */
-    public $email;
+    public $email = null;
 
     /**
      * UserUpdaterData constructor.
      *
-     * @param int   $userId
-     * @param array $args
+     * @param array<string,string|int> $args
      */
-    public function __construct(int $userId, array $args)
+    public function __construct(array $args)
     {
-        $this->id = $userId;
-        $this->username = $args['username'] ?? null;
-        $this->first_name = $args['first_name'] ?? null;
-        $this->last_name = $args['last_name'] ?? null;
-        $this->email = $args['email'] ?? null;
+        $this->id = (int)$args['id'];
+        $this->username = $args['username'] ? strval($args['username']) : null;
+        $this->first_name = $args['first_name'] ? strval($args['first_name']) : null;
+        $this->last_name = $args['last_name'] ? strval($args['last_name']) : null;
+        $this->email = $args['email'] ? strval($args['email']) : null;
     }
 
+    /**
+     * @return array<string, int|string|null>
+     */
     public function jsonSerialize(): array
     {
         return [
