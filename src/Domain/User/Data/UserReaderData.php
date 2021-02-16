@@ -44,7 +44,6 @@ final class UserReaderData implements JsonSerializable
 
     public function __construct()
     {
-
     }
 
     public function jsonSerialize()
