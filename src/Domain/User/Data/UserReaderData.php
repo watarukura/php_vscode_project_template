@@ -13,34 +13,39 @@ use JsonSerializable;
 final class UserReaderData implements JsonSerializable
 {
     /**
-     * @var int
+     * @var int|null
      * @OA\Property (type="integer", format="int64", readOnly=true, example=1)
      */
-    public $id;
+    public $id = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="johndoe")
      */
-    public $username;
+    public $username = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="John")
      */
-    public $first_name;
+    public $first_name = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="Doe")
      */
-    public $last_name;
+    public $last_name = null;
 
     /**
-     * @var string
+     * @var string|null
      * @OA\Property (type="string", example="johndoe@example.com")
      */
-    public $email;
+    public $email = null;
+
+    public function __construct()
+    {
+
+    }
 
     public function jsonSerialize()
     {

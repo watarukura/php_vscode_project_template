@@ -79,12 +79,12 @@ class UserCreatorRepositoryDdb
     private function incrementUserId(): int
     {
         $marshaler = new Marshaler();
-        $key = $marshaler->marshalJson((string)json_encode([
+        $key = $marshaler->marshalItem([
             'id' => 'users'
-        ]));
-        $eav = $marshaler->marshalJson((string)json_encode([
+        ]);
+        $eav = $marshaler->marshalItem([
             ':increment' => 1
-        ]));
+        ]);
         $ean = [
             '#c' => 'counter'
         ];
@@ -98,7 +98,16 @@ class UserCreatorRepositoryDdb
         ];
         try {
             $result = $this->client->updateItem($params);
-            return $result['Attributes']['counter']['N'];
+            $attr = $result['Attributes'] ?? [];
+            $counter = json_decode(
+                $marshaler->unmarshalJson($attr),
+                true
+            );
+            if ($counter) {
+                return $counter['counter'];
+            } else {
+                throw new DomainException(sprintf('Counter not found: %s', 'users'));
+            }
         } catch (DynamoDbException $exception) {
             throw $exception;
         }

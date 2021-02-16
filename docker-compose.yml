@@ -40,24 +40,24 @@ services:
       - './docker/php-fpm/config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini'
       - './docker/php-fpm/tmp:/tmp'
     depends_on:
-      - db
+#      - db
       - ddb
 
-  db:
-    image: library/mysql:5.6
-    ports:
-      - "23307:3306"
-    environment:
-      - MYSQL_DATABASE=test
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=pass
-      - MYSQL_ROOT_PASSWORD=root_pass
-      - TZ=Asia/Tokyo
-    volumes:
-      - "./docker/mysql/config/my.cfg:/etc/mysql/conf.d/config-file.cnf"
-      - "./resources/migrations/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql"
-
-
+#  db:
+#    image: library/mysql:5.6
+#    ports:
+#      - "23307:3306"
+#    environment:
+#      - mysql_database=test
+#      - mysql_user=user
+#      - mysql_password=pass
+#      - mysql_root_password=root_pass
+#      - tz=asia/tokyo
+#    volumes:
+#      - "./docker/mysql/config/my.cfg:/etc/mysql/conf.d/config-file.cnf"
+#      - "./resources/migrations/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql"
+#
+#
   ddb:
     image: amazon/dynamodb-local:latest
     ports:

@@ -3,6 +3,7 @@
 set -o pipefail
 
 echo "DynamoDB setup start"
+export AWS_PAGER=""
 
 count=$(aws --endpoint http://localhost:28000 dynamodb list-tables --query 'TableNames[] | length(@)')
 # shellcheck disable=SC2181
