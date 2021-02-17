@@ -76,39 +76,41 @@ class UserCreatorRepositoryDdb
         return $id;
     }
 
+    /**
+     * @return int
+     * @throws Exception
+     */
     private function incrementUserId(): int
     {
         $marshaler = new Marshaler();
-        $key = $marshaler->marshalItem([
-            'id' => 'users'
-        ]);
-        $eav = $marshaler->marshalItem([
-            ':increment' => 1
-        ]);
-        $ean = [
-            '#c' => 'counter'
+        $statement = 'UPDATE counter '
+                   . 'SET counter = counter + ? '
+                   . 'WHERE id = ? RETURNING ALL NEW *;';
+        $parameters = [
+            [
+                'N' => 1
+            ],
+            [
+                'S' => 'users'
+            ]
         ];
-        $params = [
-            'TableName'                 => 'counter',
-            'Key'                       => $key,
-            'UpdateExpression'          => 'ADD #c :increment',
-            'ExpressionAttributeValues' => $eav,
-            'ExpressionAttributeNames'  => $ean,
-            'ReturnValues'              => 'UPDATED_NEW'
-        ];
+
         try {
-            $result = $this->client->updateItem($params);
-            $attr = $result['Attributes'] ?? [];
-            $counter = json_decode(
-                $marshaler->unmarshalJson($attr),
-                true
-            );
-            if ($counter) {
-                return $counter['counter'];
-            } else {
+            $result = $this->client->executeStatement([
+                'Parameters' => $parameters,
+                'Statement'  => $statement
+            ]);
+            $items = $result->get('Items') ?? [];
+            if (!$items) {
                 throw new DomainException(sprintf('Counter not found: %s', 'users'));
+            } else {
+                $result_item = json_decode(
+                    $marshaler->unmarshalJson($items[0]),
+                    true
+                );
+                return $result_item['counter'];
             }
-        } catch (DynamoDbException $exception) {
+        } catch (Exception $exception) {
             throw $exception;
         }
     }
